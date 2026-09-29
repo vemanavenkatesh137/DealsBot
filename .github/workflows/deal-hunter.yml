@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-telegram:
+  test-and-run:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,6 +19,10 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          pytest -v
 
       - name: Run Deal Hunter
         env:
