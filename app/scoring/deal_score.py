@@ -53,6 +53,7 @@ def calculate_deal_score(
             history_score = 0
 
     else:
+        # No historical price data available
         history_score = 10
 
     # ---------------------------------------------------------
@@ -113,7 +114,7 @@ def calculate_deal_score(
         offer_score = 0
 
     # ---------------------------------------------------------
-    # Final score — 100 points
+    # Calculate raw score
     # ---------------------------------------------------------
 
     score = (
@@ -124,4 +125,19 @@ def calculate_deal_score(
         + offer_score
     )
 
-    return min(round(score), 100)
+    score = min(round(score), 100)
+
+    # ---------------------------------------------------------
+    # Quality gates
+    #
+    # Very low-rated products should not become Telegram
+    # alerts simply because they have a large discount.
+    # ---------------------------------------------------------
+
+    if rating < 3.0:
+        score = min(score, 59)
+
+    elif rating < 3.5:
+        score = min(score, 69)
+
+    return score
