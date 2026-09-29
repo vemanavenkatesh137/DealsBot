@@ -57,13 +57,11 @@ def calculate_deal_score(
         # No historical data available
         history_score = 10
 
-    # ---------------------------------------------------------
-    # 3. Rating — 15 points
-    # ---------------------------------------------------------
+    # 3. Rating — 20 points
 
-    rating = max(0, min(rating, 5))
+rating = max(0, min(rating, 5))
 
-    rating_score = (rating / 5) * 15
+rating_score = (rating / 5) * 20
 
     # ---------------------------------------------------------
     # 4. Review confidence — 10 points
@@ -94,26 +92,25 @@ def calculate_deal_score(
     extra_discount = max(0, coupon) + max(0, bank_discount)
 
     if extra_discount >= 2000:
-        offer_score = 20
+    offer_score = 15
 
-    elif extra_discount >= 1500:
-        offer_score = 17
+elif extra_discount >= 1500:
+    offer_score = 13
 
-    elif extra_discount >= 1000:
-        offer_score = 14
+elif extra_discount >= 1000:
+    offer_score = 11
 
-    elif extra_discount >= 500:
-        offer_score = 10
+elif extra_discount >= 500:
+    offer_score = 8
 
-    elif extra_discount >= 200:
-        offer_score = 6
+elif extra_discount >= 200:
+    offer_score = 5
 
-    elif extra_discount > 0:
-        offer_score = 3
+elif extra_discount > 0:
+    offer_score = 2
 
-    else:
-        offer_score = 0
-
+else:
+    offer_score = 0
     # ---------------------------------------------------------
     # Final score
     # ---------------------------------------------------------
