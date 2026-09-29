@@ -1,4 +1,3 @@
-```python
 def calculate_deal_score(
     current_price: float,
     mrp: float,
@@ -66,5 +65,65 @@ def calculate_deal_score(
 
     rating_score = (rating / 5) * 15
 
-    # -------------------
-```
+    # ---------------------------------------------------------
+    # 4. Review confidence — 10 points
+    # ---------------------------------------------------------
+
+    if review_count >= 10000:
+        review_score = 10
+
+    elif review_count >= 5000:
+        review_score = 9
+
+    elif review_count >= 1000:
+        review_score = 7
+
+    elif review_count >= 500:
+        review_score = 5
+
+    elif review_count >= 100:
+        review_score = 3
+
+    else:
+        review_score = 1
+
+    # ---------------------------------------------------------
+    # 5. Coupon + bank offer — 20 points
+    # ---------------------------------------------------------
+
+    extra_discount = max(0, coupon) + max(0, bank_discount)
+
+    if extra_discount >= 2000:
+        offer_score = 20
+
+    elif extra_discount >= 1500:
+        offer_score = 17
+
+    elif extra_discount >= 1000:
+        offer_score = 14
+
+    elif extra_discount >= 500:
+        offer_score = 10
+
+    elif extra_discount >= 200:
+        offer_score = 6
+
+    elif extra_discount > 0:
+        offer_score = 3
+
+    else:
+        offer_score = 0
+
+    # ---------------------------------------------------------
+    # Final score
+    # ---------------------------------------------------------
+
+    score = (
+        discount_score
+        + history_score
+        + rating_score
+        + review_score
+        + offer_score
+    )
+
+    return min(round(score), 100)
