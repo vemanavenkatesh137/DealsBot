@@ -30,7 +30,23 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest -v
+          echo "===== CURRENT DIRECTORY ====="
+          pwd
+
+          echo "===== ROOT CONTENTS ====="
+          ls -la
+
+          echo "===== APP CONTENTS ====="
+          find ./app -maxdepth 3 -type f -print
+
+          echo "===== PYTHON PATH ====="
+          python -c "import sys; print('\n'.join(sys.path))"
+
+          echo "===== TEST APP IMPORT ====="
+          PYTHONPATH="$GITHUB_WORKSPACE" python -c "import app; print(app.__file__)"
+
+          echo "===== PYTEST ====="
+          PYTHONPATH="$GITHUB_WORKSPACE" pytest -v
 
       - name: Run Deal Hunter
         env:
