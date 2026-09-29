@@ -1,4 +1,3 @@
-```python
 from app.scoring.deal_score import calculate_deal_score
 
 
@@ -82,4 +81,3 @@ def test_invalid_price():
     )
 
     assert score == 0
-```
