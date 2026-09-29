@@ -12,11 +12,10 @@ def calculate_deal_score(
         return 0
 
     # ---------------------------------------------------------
-    # 1. Price discount vs MRP — 25 points
+    # 1. MRP discount — 25 points
     # ---------------------------------------------------------
 
     discount_percent = ((mrp - current_price) / mrp) * 100
-
     discount_percent = max(0, discount_percent)
 
     discount_score = min(
@@ -54,17 +53,18 @@ def calculate_deal_score(
             history_score = 0
 
     else:
-        # No historical data available
         history_score = 10
 
+    # ---------------------------------------------------------
     # 3. Rating — 20 points
+    # ---------------------------------------------------------
 
-rating = max(0, min(rating, 5))
+    rating = max(0, min(rating, 5))
 
-rating_score = (rating / 5) * 20
+    rating_score = (rating / 5) * 20
 
     # ---------------------------------------------------------
-    # 4. Review confidence — 10 points
+    # 4. Reviews — 10 points
     # ---------------------------------------------------------
 
     if review_count >= 10000:
@@ -86,33 +86,34 @@ rating_score = (rating / 5) * 20
         review_score = 1
 
     # ---------------------------------------------------------
-    # 5. Coupon + bank offer — 20 points
+    # 5. Coupon + bank offer — 15 points
     # ---------------------------------------------------------
 
     extra_discount = max(0, coupon) + max(0, bank_discount)
 
     if extra_discount >= 2000:
-    offer_score = 15
+        offer_score = 15
 
-elif extra_discount >= 1500:
-    offer_score = 13
+    elif extra_discount >= 1500:
+        offer_score = 13
 
-elif extra_discount >= 1000:
-    offer_score = 11
+    elif extra_discount >= 1000:
+        offer_score = 11
 
-elif extra_discount >= 500:
-    offer_score = 8
+    elif extra_discount >= 500:
+        offer_score = 8
 
-elif extra_discount >= 200:
-    offer_score = 5
+    elif extra_discount >= 200:
+        offer_score = 5
 
-elif extra_discount > 0:
-    offer_score = 2
+    elif extra_discount > 0:
+        offer_score = 2
 
-else:
-    offer_score = 0
+    else:
+        offer_score = 0
+
     # ---------------------------------------------------------
-    # Final score
+    # Final score — 100 points
     # ---------------------------------------------------------
 
     score = (
