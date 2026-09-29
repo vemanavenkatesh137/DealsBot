@@ -20,6 +20,14 @@ jobs:
         run: |
           pip install -r requirements.txt
 
+      - name: Check repository structure
+        run: |
+          echo "Current directory:"
+          pwd
+
+          echo "Repository files:"
+          find . -maxdepth 4 -type f | sort
+
       - name: Run tests
         run: |
           pytest -v
